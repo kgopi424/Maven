@@ -1,0 +1,106 @@
+name: actions-importer/projects/testing
+on:
+  push:
+  workflow_dispatch:
+concurrency:
+  group: "${{ github.ref }}"
+  cancel-in-progress: true
+env:
+  ID_RSA: |-
+    -----BEGIN OPENSSH PRIVATE KEY-----
+    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
+    -----END OPENSSH PRIVATE KEY-----
+  SERVER_IP: "${{ secrets.SERVER_IP }}"
+  SERVER_USER: "${{ secrets.SERVER_USER }}"
+jobs:
+  build-job:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v3.5.0
+      with:
+        fetch-depth: 20
+        lfs: true
+    - run: echo "Hello, ${{ github.actor }}!"
+  test-job1:
+    needs: build-job
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v3.5.0
+      with:
+        fetch-depth: 20
+        lfs: true
+    - run: echo "This job tests something"
+  test-job2:
+    needs: build-job
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v3.5.0
+      with:
+        fetch-depth: 20
+        lfs: true
+    - run: echo "This job tests something, but takes more time than test-job1."
+    - run: echo "After the echo commands complete, it runs the sleep command for 20 seconds"
+    - run: echo "which simulates a test that runs 20 seconds longer than test-job1"
+    - run: sleep 20
+  deploy-prod:
+    needs:
+    - test-job1
+    - test-job2
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v3.5.0
+      with:
+        fetch-depth: 20
+        lfs: true
+    - run: echo "This job deploys something from the ${{ github.ref }} branch."
