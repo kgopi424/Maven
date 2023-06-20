@@ -1,0 +1,38 @@
+name: nginx
+on:
+  workflow_dispatch:
+jobs:
+  Building_and_Deploying_nginx:
+    name: Building and Deploying nginx
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3.5.0
+    - name: delete directory
+      shell: bash
+      run: rm -rf "`pwd`"
+    - name: checkout
+      uses: actions/checkout@v3.5.0
+      with:
+        repository: sreeharsha-alluri/Jenkins-to-GitHub
+    - name: sh
+      shell: bash
+      run: pwd
+    - name: sh
+      shell: bash
+      run: docker build -t my-nginx-image -f Dockerfile .
+      working-directory: "/var/lib/jenkins/workspace/nginx"
+    - name: sh
+      shell: bash
+      run: docker run -td -p 8084:80 my-nginx-image
+      working-directory: "/var/lib/jenkins/workspace/nginx"
+  Checking_the_IP:
+    name: Checking the IP
+    runs-on: ubuntu-latest
+    needs: Building_and_Deploying_nginx
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3.5.0
+    - name: sh
+      shell: bash
+      run: curl ifconfig.me
